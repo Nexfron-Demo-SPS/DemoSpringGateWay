@@ -4,24 +4,11 @@ server:
 spring:
   application:
     name: api-gateway
+  config:
+    import: "optional:configserver:http://localhost:8888"
   cloud:
-    gateway:
-      routes:
-        - id: first-service
-          uri: lb://FIRST-SERVICE
-          predicates:
-            - Path=/first-service/
-          filters:
-            - AddRequestHeader=first-request, first-request-header
-            - AddResponseHeader=first-response, first-response-header
-
-        - id: second-service
-          uri: lb://SECOND-SERVICE
-          predicates:
-            - Path=/second-service/**
-          filters:
-            - AddRequestHeader=second-request, second-request-header
-            - AddResponseHeader=second-response, second-response-header
+    config:
+      fail-fast: true
 
 eureka:
   client:
